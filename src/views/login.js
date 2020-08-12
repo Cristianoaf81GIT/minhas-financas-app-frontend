@@ -1,80 +1,129 @@
 import React from 'react'
 import Card from '../components/card'
 import FormGroup from '../components/form-group'
- 
-class Login extends React.Component {
-    
-    state = {
-        email: '',
-        senha: ''
-    }
+import { withRouter } from 'react-router-dom'
+import UsuarioService from '../app/service/usuarioService'
+import LocalStorageService from '../app/service/localStorageService'
+import { mensagemErro } from '../components/toastr'
 
-    entrar = () => {
-        console.log('Email: ', this.state.email )
-        console.log('Senha: ', this.state.senha )
+class Login extends React.Component {
+
+ 
+  state = {
+      email: '',
+      senha: '',
+      mensagemErro: null
+  }
+
+  constructor () {
+    super()
+    this.service = new UsuarioService()
+  }
+
+  entrar = () => {
+   
+    this.service.autenticar({
+      email: this.state.email,
+      senha: this.state.senha
+    }).then( response => {
+      LocalStorageService.adicionarItem('_usuario_logado', response.data)
+      this.props.history.push('/home')
+    }).catch( error => {
+      this.setState({mensagemErro: error.response.data})
+      mensagemErro(this.state.mensagemErro)
+    })  
+    
+    
+
+  }
+		
+		renderizaResponstaErro = () => {
+			
+			if ( this.state.mensagemErro ) {
+				
+				return (
+					
+          <span className='alert text-danger'>
+            <li style={styles.alertWidth}>Erro : {this.state.mensagemErro}</li>					
+          </span>
+        
+				)
+
+			}
+
+		}
+
+    prepareCadastrar = () => {
+
+        this.props.history.push('/cadastro-usuarios')
+
     }
 
     render () {
-        return (
+        return (        
 
-            <div className="container">
+            <div className="row">
+                <div className="col col-md-6" style={ styles.formColumn }>
+                    <div className="bs-docs-section">
+                        <Card title="Login" >
+														
+														<div className="row" style={{marginBottom: '3px'}}>
+															
+															{this.renderizaResponstaErro()}
+															
+														</div>	
 
-                <div className="row">
-                    <div className="col col-md-6" style={ styles.formColumn }>
-                        <div className="bs-docs-section">
-                            <Card title="Login" >
-                                <div className="row">
-                                    <div className="col-lg-12">
-                                        <div className="bs-component">
-                                            <fieldset>
-                                            
-                                            <FormGroup label="Email: *"
-                                            htmlFor="exampleInputEmail">
-                                               
-                                               <input type="email" 
-                                               required
-                                               value={this.state.email}
-                                               onChange={(e)=>this.setState({email: e.target.value})}
-                                               className="form-control" 
-                                               id="exampleInputEmail1" 
-                                               aria-describedby="emailHelp" 
-                                               placeholder="Digite o Email"/>
+                            <div className="row">
+                                <div className="col-lg-12">
+																	<div className="bs-component">
+																			<fieldset>
+																			
+																			<FormGroup label="Email: *"
+																			htmlFor="exampleInputEmail">
+																					
+																					<input type="email" 
+																					required
+																					value={this.state.email}
+																					onChange={(e)=>this.setState({email: e.target.value})}
+																					className="form-control" 
+																					id="exampleInputEmail1" 
+																					aria-describedby="emailHelp" 
+																					placeholder="Digite o Email"/>
 
-                                             </FormGroup>
+																					</FormGroup>
 
-                                            <FormGroup label="Senha: *"
-                                            htmlFor="exampleInputPassword1">
-                                               
-                                               <input type="password" 
-                                               required
-                                               value={this.state.senha}
-                                               onChange={(e)=>this.setState({senha:e.target.value})}
-                                               className="form-control" 
-                                               id="exampleInputPassword1" 
-                                               placeholder="Digite a senha"/>
+																			<FormGroup label="Senha: *"
+																			htmlFor="exampleInputPassword1">
+																					
+																					<input type="password" 
+																					required
+																					value={this.state.senha}
+																					onChange={(e)=>this.setState({senha:e.target.value})}
+																					className="form-control" 
+																					id="exampleInputPassword1" 
+																					placeholder="Digite a senha"/>
 
-                                             </FormGroup>
+																			</FormGroup>
 
-                                            <button onClick={this.entrar}
-                                            className="btn btn-success">
-                                                Entrar
-                                            </button>
-                                            &nbsp;
-                                            <button 
-                                            className="btn btn-danger">
-                                                Cadastrar
-                                            </button>
+																			<button onClick={this.entrar}
+																			className="btn btn-success">
+																					Entrar
+																			</button>
+																			&nbsp;
+																			<button 
+																			className="btn btn-danger"
+																			onClick={this.prepareCadastrar}>
+																					Cadastrar
+																			</button>
 
-                                            </fieldset>
-                                        </div>
-                                    </div>
+																			</fieldset>
+																	</div>
                                 </div>
-                            </Card>
-                        </div>
+                            </div>
+                        </Card>
                     </div>
                 </div>
-
-            </div>
+            </div>            
 
         )
     }
@@ -83,11 +132,22 @@ class Login extends React.Component {
 
 
 const styles = {
+    
     formColumn: {
-        position: 'relative',
-        left: '300px'
-    },
+       width: '50%',
+       maxWidth:'100%',
+       marginLeft: 'auto',
+       marginRight: 'auto'
+		},
+		
+		alertWidth: {
+			width: '100%',	
+			marginLeft: 'auto',
+			marginRight: 'auto'
+		}
 
 }
 
-export default Login
+ 
+
+export default withRouter( Login )

@@ -1,0 +1,13 @@
+{
+    "editor.defaultFormatter": "vscode.npm",
+    "editor.tabSize": 2,
+    "editor.detectIndentation": false,
+    "emmet.includeLanguages": {
+      "javascript": "javascriptreact",
+      "html": "html"
+    },
+    "editor.fontFamily": "'Fira Code', 'Consolas', 'Courier New', 'monospace'",
+    "editor.fontSize": 14,
+    "editor.fontWeight": "400",
+    "editor.fontLigatures": true
+}
