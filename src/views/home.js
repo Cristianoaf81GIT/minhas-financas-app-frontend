@@ -1,6 +1,7 @@
 import React from 'react'
 import UsuarioService from '../app/service/usuarioService'
 import LocalStorageService from '../app/service/localStorageService'
+import currencyFormatter from 'currency-formatter'
 import { Link } from 'react-router-dom'
 
 
@@ -48,7 +49,7 @@ class Home extends React.Component {
 
                 <p className="lead">Esse é seu sistema de finanças.</p>
 
-                <p className="lead">Seu saldo para o mês atual é de R$ {this.state.saldo}</p>
+                <p className="lead">Seu saldo para o mês atual é de {currencyFormatter.format( this.state.saldo, {code: 'BRL'} ) }</p>
 
                 <hr className="my-4"/>
 
@@ -59,7 +60,7 @@ class Home extends React.Component {
                 <p className="lead">
 
                 <Link 
-                className="btn btn-primary btn-md"
+                className="btn btn-primary btn-md btn-home"
                 to="/cadastro-usuarios"
                 role="button">
                       <span>
@@ -69,7 +70,7 @@ class Home extends React.Component {
                 </Link>
 
                 <Link 
-                className="btn btn-danger btn-md" 
+                className="btn btn-danger btn-md btn-home" 
                 to="/cadastro-lancamentos/0" 
                 role="button">
                     <span>

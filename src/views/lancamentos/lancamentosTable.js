@@ -16,12 +16,42 @@ const LancamentosTable = ( props ) => {
         <td>
 
           <button type="button"
-           className="btn btn-success btn-table"
-           onClick={ e => props.editAction(lancamento.id) }><i className="fa fa-edit"></i></button>
+            className="btn btn-outline-primary btn-table"
+            disabled={lancamento.status === 'EFETIVADO'}
+            onClick={ e => props.changeStatus(lancamento, 'EFETIVADO')}
+            data-toggle="tooltip" data-placement="top" title="redefinir situação: efetivar lançamento">
+            <i className='fa fa-check'></i>
+          </button>
+
+          <button type="button"
+            className="btn btn-outline-warning btn-table"
+            disabled={lancamento.status === 'CANCELADO'}
+            onClick={ e => props.changeStatus(lancamento, 'CANCELADO')}
+            data-toggle="tooltip" data-placement="top" title="redefinir situação: cancelar lançamento">
+            <i className='fa fa-ban'></i>
+          </button>
+
+          <button type="button"
+            className="btn btn-outline-info btn-table"
+            disabled={lancamento.status === 'PENDENTE'}
+            onClick={ e => props.changeStatus(lancamento, 'PENDENTE')}
+            data-toggle="tooltip" data-placement="top" title="reverter situação para lançamento pendente">
+            <i className='fa fa-undo'></i>
+          </button>
+
+          <button type="button"
+            className="btn btn-outline-success btn-table"
+            data-toggle="tooltip" data-placement="top" title="editar o lançamento"
+            onClick={ e => props.editAction(lancamento.id) }>
+            <i className="fa fa-edit"></i>
+          </button>
 
           <button type="button" 
-          className="btn btn-danger btn-table" 
-          onClick={ e => props.deleteAction(lancamento) }><i className="fa fa-trash"></i></button>
+            className="btn btn-outline-danger btn-table"
+            data-toggle="tooltip" data-placement="top" title="excluir o lançamento"
+            onClick={ e => props.deleteAction(lancamento) }>
+            <i className="fa fa-trash"></i>
+          </button>
 
         </td>
       </tr> 

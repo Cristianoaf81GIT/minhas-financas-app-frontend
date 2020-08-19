@@ -77,7 +77,7 @@ class ConsultaLancamentos extends React.Component {
       this.setState( {lancamentos: response.data} )
 
       if ( this.state.lancamentos.length <= 0 ) 
-        messages.mensagemAlerta('Nenhum registro encontrado para a pesquisa!')
+        messages.mensagemAlerta('Nenhum registro encontrado para as definições de pesquisa!')
       
     }).catch( error => {
       messages.mensagemErro(error.data)
@@ -109,6 +109,26 @@ class ConsultaLancamentos extends React.Component {
       messages.mensagemErro('Ocorreu um erro ao remover o lançamento!')
     }
   }
+
+
+  alterarStatus = (lancamento, status) => {
+    this.service
+      .alterarStatus(lancamento.id, status)
+      .then( response => {
+        const lancamentos = this.state.lancamentos
+        const index = lancamentos.indexOf(lancamento)
+        
+        if (index !== -1 ){
+          lancamento['status'] = status
+          lancamentos[index] = lancamento
+          this.setState( {lancamentos} )
+          messages.mensagemSucesso('status alterado com sucesso')
+        }
+
+      })
+
+  }
+
 
   render () {
 
@@ -202,7 +222,7 @@ class ConsultaLancamentos extends React.Component {
                 Buscar
               </button>
 
-              <Link to="/cadastro-lancamentos/0" className="btn btn-primary">
+              <Link to="/cadastro-lancamentos" className="btn btn-primary">
                 <i className="fa fa-plus"></i>&nbsp;
                 Cadastrar
               </Link>
@@ -227,7 +247,8 @@ class ConsultaLancamentos extends React.Component {
                     <button
                       type="button"
                       onClick={()=> this.setState({...initialState})}
-                      className="btn lancamentos-btn btn-link">
+                      className="btn lancamentos-btn btn-link"
+                      style={{marginTop: '30px'}}>
                       <i className="fa fa-paint-brush"></i>&nbsp; 
                         limpar pesquisa 
                     </button> 
@@ -236,6 +257,7 @@ class ConsultaLancamentos extends React.Component {
                       lancamentos={this.state.lancamentos}
                       deleteAction={this.DialogoConfirmaACao}
                       editAction={this.editar}
+                      changeStatus={this.alterarStatus}
                     />                    
 
                   </> : null
@@ -269,7 +291,6 @@ class ConsultaLancamentos extends React.Component {
   }
 
 }
-
 
 
 export default withRouter ( ConsultaLancamentos )

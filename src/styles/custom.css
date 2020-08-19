@@ -113,8 +113,8 @@ pre{ background:#f7f7f9 }
 }
 
 input { padding: 0.01em; }
-.btn { margin: 10px 10px 10px 10px; box-shadow: 3px 3px #666e; font-size: 1.0em; border-radius: 0.02em;}
-.btn:hover { margin: 10px 10px 10px 10px; box-shadow: 2px 2px #666e; font-size: 1.0em; border-radius: 0.02em;}
+.btn { margin-right: 10px; box-shadow: 3px 3px #666e; font-size: 1.0em; border-radius: 0.02em;}
+.btn:hover {  margin-right: 10px; box-shadow: 2px 2px #666e; font-size: 1.0em; border-radius: 0.02em;}
 .btn-md,.btn-md:hover{ font-size: 0.75em; }
 .bg-lightblue {
   background-color:#d8e9ee;
@@ -215,6 +215,8 @@ tr > td > .btn:hover {
   box-shadow: none;
   color: crimson;
   border: 0.05em solid crimson;
+  left: auto;
+  right: 0px;
   
 }
 
@@ -228,6 +230,7 @@ tr > td > .btn:hover {
 
 .btn-table {
   width: 40px;
+ 
 }
 
 @media (max-width: 1200px) {
@@ -238,4 +241,13 @@ tr > td > .btn:hover {
   }
 }
 
+.btn-home {
+  width: 200px;
+}
 
+@media (max-width: 800px) {
+  .btn-home {
+    width: 90%;   
+    margin: 10px 10px 10px 10px;
+  }
+}

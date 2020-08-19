@@ -107,12 +107,18 @@ class Login extends React.Component {
 
 																			<button onClick={this.entrar}
 																			className="btn btn-success">
+                                        <span>
+                                        <i className='fa fa-sign-in'></i>
+                                        </span>&nbsp;
 																					Entrar
 																			</button>
 																			&nbsp;
 																			<button 
 																			className="btn btn-danger"
 																			onClick={this.prepareCadastrar}>
+                                        <span>
+                                        <i className='fa fa-user'></i>
+                                        </span>&nbsp;
 																					Cadastrar
 																			</button>
 
