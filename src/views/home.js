@@ -1,9 +1,8 @@
 import React from 'react'
 import UsuarioService from '../app/service/usuarioService'
-import LocalStorageService from '../app/service/localStorageService'
 import currencyFormatter from 'currency-formatter'
 import { Link } from 'react-router-dom'
-
+import {AuthContext} from '../main/provedorAutenticacao'
 
 class Home extends React.Component {
 
@@ -21,8 +20,7 @@ class Home extends React.Component {
 
     componentDidMount = async () => {
 
-        const usuario = LocalStorageService.obterItem('_usuario_logado') 
-        ? LocalStorageService.obterItem('_usuario_logado') : {id:0,nome:''}
+        const usuario = this.context.usuarioAutenticado
 
         this.setState({nome: usuario.nome})
 
@@ -96,4 +94,5 @@ const styles = {
   }
 }
 
+Home.contextType = AuthContext
 export default Home 

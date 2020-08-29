@@ -1,17 +1,32 @@
 import React from 'react'
 
 
-const NavBarItem = ( props ) => {
+const NavBarItem = ( {render, ...navBarProps} ) => {
 
-    return (
+    if ( render ) {
+      return (
 
-			<li className="nav-item">
+        <li className="nav-item">
+  
+          <a 
+            onClick={navBarProps.onClick} 
+            className="nav-link" 
+            href={ navBarProps.href } 
+            tabIndex="1">
 
-				<a className="nav-link" href={ props.href } tabIndex="1"> { props.label } </a>
+               { navBarProps.label } 
+               
+          </a>
+  
+        </li>
+  
+      )
 
-			</li>
+    } else {
+      return false
+    }
 
-    )
+    
 
 }
 
