@@ -1,3 +1,3 @@
-const baseUrl = 'http://localhost:8080'
+const baseUrl = 'http://https://crf81-minhas-financas-api.herokuapp.com'
 
 export default baseUrl
